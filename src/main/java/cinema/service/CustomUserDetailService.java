@@ -1,7 +1,6 @@
 package cinema.service;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import static org.springframework.security.core.userdetails.User.withUsername;
 
 import cinema.model.Role;
@@ -14,8 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@Log4j2
 public class CustomUserDetailService implements UserDetailsService {
-    private static final Logger logger = LogManager.getLogger(CustomUserDetailService.class);
     private final UserService userService;
 
     @Autowired
@@ -26,7 +25,7 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (userService.findByEmail(username).isEmpty()) {
-            logger.error("Can't find User by email. Params: email = {}", username);
+            log.error("Can't find User by email. Params: email = {}", username);
             throw new UsernameNotFoundException("User with username " + username
                     + " not found!");
         }
@@ -39,7 +38,7 @@ public class CustomUserDetailService implements UserDetailsService {
                 .map(Role::getRoleName)
                         .map(Enum::toString)
                 .toArray(String[]::new));
-        logger.info("Create User Details. Params: User = {}", user);
+        log.info("Create User Details. Params: User = {}", user);
         return userBuilder.build();
     }
 }

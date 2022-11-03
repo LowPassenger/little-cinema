@@ -5,8 +5,7 @@ import cinema.dao.ShoppingCartDao;
 import cinema.exception.DataProcessingException;
 import cinema.model.ShoppingCart;
 import cinema.model.User;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -14,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Log4j2
 public class ShoppingCartDaoImpl extends AbstractDao<ShoppingCart> implements ShoppingCartDao {
-    private static final Logger logger = LogManager.getLogger(ShoppingCartDaoImpl.class);
     @Autowired
     public ShoppingCartDaoImpl(SessionFactory factory) {
         super(factory, ShoppingCart.class);
@@ -32,10 +31,10 @@ public class ShoppingCartDaoImpl extends AbstractDao<ShoppingCart> implements Sh
                             + "left join fetch ms.movie "
                             + "WHERE sc.user = :user", ShoppingCart.class);
             getByUser.setParameter("user", user);
-            logger.info("Get Shopping Cart by User. Params: User = {}", user);
+            log.info("Get Shopping Cart by User. Params: User = {}", user);
             return getByUser.getSingleResult();
         } catch (Exception e) {
-            logger.error("Can't get Shopping Cart by User. Params: User = {}", user);
+            log.error("Can't get Shopping Cart by User. Params: User = {}", user);
             throw new DataProcessingException("Not found shopping cart for user " + user, e);
         }
     }

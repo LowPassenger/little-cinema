@@ -4,13 +4,15 @@ import cinema.dto.response.OrderResponseDto;
 import cinema.model.Order;
 import cinema.model.Ticket;
 import java.util.stream.Collectors;
+
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class OrderMapper implements ResponseDtoMapper<OrderResponseDto, Order> {
-    private static final Logger logger = LogManager.getLogger(OrderMapper.class);
 
     @Override
     public OrderResponseDto mapToDto(Order order) {
@@ -22,7 +24,7 @@ public class OrderMapper implements ResponseDtoMapper<OrderResponseDto, Order> {
                 .stream()
                 .map(Ticket::getId)
                 .collect(Collectors.toList()));
-        logger.info("Order from Model to Dto mapping. Params: Order = {}", order);
+        log.info("Order from Model to Dto mapping. Params: Order = {}", order);
         return responseDto;
     }
 }

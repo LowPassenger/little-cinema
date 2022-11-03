@@ -10,8 +10,8 @@ import cinema.service.UserService;
 import cinema.service.mapper.ResponseDtoMapper;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/orders")
+@Log4j2
 public class OrderController {
-    private static final Logger logger = LogManager.getLogger(OrderController.class);
     private final ShoppingCartService shoppingCartService;
     private final OrderService orderService;
     private final UserService userService;
@@ -44,14 +44,14 @@ public class OrderController {
     public OrderResponseDto completeOrder(Authentication auth) {
        User user = getUserFromAuthenticationParameter(auth);
         ShoppingCart cart = shoppingCartService.getByUser(user);
-        logger.info("Complete order. Params: User = {}", user);
+        log.info("Complete order. Params: User = {}", user);
         return orderResponseDtoMapper.mapToDto(orderService.completeOrder(cart));
     }
 
     @GetMapping
     public List<OrderResponseDto> getOrderHistory(Authentication auth) {
         User user = getUserFromAuthenticationParameter(auth);
-        logger.info("Get history of orders for User. Params: User = {}", user);
+        log.info("Get history of orders for User. Params: User = {}", user);
         return orderService.getOrdersHistory(user)
                 .stream()
                 .map(orderResponseDtoMapper::mapToDto)
@@ -62,7 +62,7 @@ public class OrderController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         if (userService.findByEmail(email).isEmpty()) {
-            logger.error("Can't get User by email. Params: email = {}", email);
+            log.error("Can't get User by email. Params: email = {}", email);
             throw new RuntimeException("User with email " + email + " not found");
         }
         return userService.findByEmail(email).get();

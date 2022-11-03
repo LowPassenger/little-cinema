@@ -5,15 +5,14 @@ import cinema.dto.response.MovieSessionResponseDto;
 import cinema.model.MovieSession;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class MovieSessionMapper implements RequestDtoMapper<MovieSessionRequestDto, MovieSession>,
         ResponseDtoMapper<MovieSessionResponseDto, MovieSession> {
-    private static final Logger logger = LogManager.getLogger(MovieSessionMapper.class);
     private final CinemaHallService cinemaHallService;
     private final MovieService movieService;
 
@@ -29,7 +28,7 @@ public class MovieSessionMapper implements RequestDtoMapper<MovieSessionRequestD
         movieSession.setMovie(movieService.get(dto.getMovieId()));
         movieSession.setCinemaHall(cinemaHallService.get(dto.getCinemaHallId()));
         movieSession.setShowTime(dto.getShowTime());
-        logger.info("Movie Session from request to Model mapping. Params: Movie Session = {}",
+        log.info("Movie Session from request to Model mapping. Params: Movie Session = {}",
                 movieSession);
         return movieSession;
     }
@@ -42,7 +41,7 @@ public class MovieSessionMapper implements RequestDtoMapper<MovieSessionRequestD
         responseDto.setMovieId(movieSession.getMovie().getId());
         responseDto.setMovieTitle(movieSession.getMovie().getTitle());
         responseDto.setShowTime(movieSession.getShowTime());
-        logger.info("Movie Session from Model to Dto mapping. Params: Movie Session = {}",
+        log.info("Movie Session from Model to Dto mapping. Params: Movie Session = {}",
                 movieSession);
         return responseDto;
     }

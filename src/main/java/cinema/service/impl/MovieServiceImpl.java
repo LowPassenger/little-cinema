@@ -4,14 +4,14 @@ import cinema.dao.MovieDao;
 import cinema.model.Movie;
 import cinema.service.MovieService;
 import java.util.List;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
+@Log4j2
 public class MovieServiceImpl implements MovieService {
-    private static final Logger logger = LogManager.getLogger(MovieServiceImpl.class);
     private final MovieDao movieDao;
 
     @Autowired
@@ -21,23 +21,23 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Movie add(Movie movie) {
-        logger.info("Add Movie to DB. Params: movie = {}", movie);
+        log.info("Add Movie to DB. Params: movie = {}", movie);
         return movieDao.add(movie);
     }
 
     @Override
     public Movie get(Long id) {
         if (movieDao.get(id).isPresent()) {
-            logger.info("Get Movie from DB. Params: id = {}", id);
+            log.info("Get Movie from DB. Params: id = {}", id);
             return movieDao.get(id).get();
         }
-        logger.error("Can't get Movie. Params: id = {}", id);
+        log.error("Can't get Movie. Params: id = {}", id);
         throw new RuntimeException("Can't get movie by id " + id);
     }
 
     @Override
     public List<Movie> getAll() {
-        logger.info("Get all Movies from DB.");
+        log.info("Get all Movies from DB.");
         return movieDao.getAll();
     }
 }

@@ -6,8 +6,8 @@ import cinema.model.User;
 import cinema.service.AuthenticationService;
 import cinema.service.mapper.ResponseDtoMapper;
 import javax.validation.Valid;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Log4j2
 public class AuthenticationController {
-    private static final Logger logger = LogManager.getLogger(AuthenticationController.class);
+    //private static final Logger logger = LogManager.getLogger(AuthenticationController.class);
     private final AuthenticationService authService;
     private final ResponseDtoMapper<UserResponseDto, User> userDtoResponseMapper;
 
@@ -30,7 +31,7 @@ public class AuthenticationController {
     @PostMapping("/register")
     public UserResponseDto register(@RequestBody @Valid UserRequestDto requestDto) {
         User user = authService.register(requestDto.getEmail(), requestDto.getPassword());
-        logger.info("Register a new user. Params: email = {}, password = OK", user.getEmail());
+        log.info("Register a new user. Params: email = {}, password = OK", user.getEmail());
         return userDtoResponseMapper.mapToDto(user);
     }
 

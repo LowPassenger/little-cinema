@@ -8,8 +8,7 @@ import cinema.service.MovieSessionService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import cinema.service.mapper.ResponseDtoMapper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/shopping-carts")
+@Log4j2
 public class ShoppingCartController {
-    private static final Logger logger = LogManager.getLogger(ShoppingCartController.class);
     private final ShoppingCartService shoppingCartService;
     private final MovieSessionService movieSessionService;
     private final UserService userService;
@@ -46,14 +45,14 @@ public class ShoppingCartController {
         User user = getUserFromAuthenticationParameter(auth);
         MovieSession movieSession = movieSessionService.get(movieSessionId);
         shoppingCartService.addSession(movieSession, user);
-        logger.info("Add to Movie Session to Shopping Cart. Params: Movie Session id = {}, "
+        log.info("Add to Movie Session to Shopping Cart. Params: Movie Session id = {}, "
                 + "User = {}", movieSessionId, user);
     }
 
     @GetMapping("/by-user")
     public ShoppingCartResponseDto getByUser(Authentication auth) {
         User user = getUserFromAuthenticationParameter(auth);
-        logger.info("Get Shopping Cart for User. Params: User = {}", user);
+        log.info("Get Shopping Cart for User. Params: User = {}", user);
         return shoppingCartResponseDtoMapper.mapToDto(shoppingCartService.getByUser(user));
     }
 
@@ -61,7 +60,7 @@ public class ShoppingCartController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         if (userService.findByEmail(email).isEmpty()) {
-            logger.error("Can't get User by email. Params: email = {}", email);
+            log.error("Can't get User by email. Params: email = {}", email);
             throw new RuntimeException("User with email " + email + " not found");
         }
         return userService.findByEmail(email).get();

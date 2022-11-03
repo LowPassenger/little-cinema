@@ -11,8 +11,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/movie-sessions")
+@Log4j2
 public class MovieSessionController {
-    private static final Logger logger = LogManager.getLogger(MovieSessionController.class);
     private final MovieSessionService movieSessionService;
     private final RequestDtoMapper<MovieSessionRequestDto, MovieSession>
             movieSessionRequestDtoMapper;
@@ -49,7 +49,7 @@ public class MovieSessionController {
     public MovieSessionResponseDto add(@RequestBody @Valid MovieSessionRequestDto requestDto) {
         MovieSession movieSession = movieSessionRequestDtoMapper.mapToModel(requestDto);
         movieSessionService.add(movieSession);
-        logger.info("Add Movie Session. Params: id = {}", movieSession.getId());
+        log.info("Add Movie Session. Params: id = {}", movieSession.getId());
         return movieSessionResponseDtoMapper.mapToDto(movieSession);
     }
 
@@ -58,7 +58,7 @@ public class MovieSessionController {
                                                 @RequestParam
             @DateTimeFormat(pattern = DateTimePatternUtil.DATE_PATTERN)
                                                         LocalDate date) {
-        logger.info("Get available Movie Session. Params: movie id = {}, date = {}",
+        log.info("Get available Movie Session. Params: movie id = {}, date = {}",
                 movieId, date);
         return movieSessionService.findAvailableSessions(movieId, date)
                 .stream()
@@ -72,13 +72,13 @@ public class MovieSessionController {
         MovieSession movieSession = movieSessionRequestDtoMapper.mapToModel(requestDto);
         movieSession.setId(id);
         movieSessionService.update(movieSession);
-        logger.info("Update Movie Session. Params: movie session id = {}", id);
+        log.info("Update Movie Session. Params: movie session id = {}", id);
         return movieSessionResponseDtoMapper.mapToDto(movieSession);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
-        logger.info("Delete Movie Session. Params: id = {}", id);
+        log.info("Delete Movie Session. Params: id = {}", id);
         movieSessionService.delete(id);
     }
 }

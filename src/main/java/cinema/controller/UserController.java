@@ -4,6 +4,7 @@ import cinema.dto.response.UserResponseDto;
 import cinema.model.User;
 import cinema.service.UserService;
 import cinema.service.mapper.ResponseDtoMapper;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/users")
+@Log4j2
 public class UserController {
-    private static final Logger logger = LogManager.getLogger(UserController.class);
     private final UserService userService;
     private final ResponseDtoMapper<UserResponseDto, User> userResponseDtoMapper;
 
@@ -29,11 +30,11 @@ public class UserController {
     @GetMapping("/by-email")
     public UserResponseDto findByEmail(@RequestParam String email) {
         if (userService.findByEmail(email).isEmpty()) {
-            logger.error("Can't get User by email. Params: email = {}", email);
+            log.error("Can't get User by email. Params: email = {}", email);
             throw new RuntimeException("User with email " + email + " not found");
         }
         User user = userService.findByEmail(email).get();
-        logger.info("Get User by email. Params: email = {}", email);
+        log.info("Get User by email. Params: email = {}", email);
         return userResponseDtoMapper.mapToDto(user);
     }
 }

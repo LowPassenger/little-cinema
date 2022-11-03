@@ -4,14 +4,14 @@ import cinema.dto.response.ShoppingCartResponseDto;
 import cinema.model.ShoppingCart;
 import cinema.model.Ticket;
 import java.util.stream.Collectors;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class ShoppingCartMapper implements
         ResponseDtoMapper<ShoppingCartResponseDto, ShoppingCart> {
-    private static final Logger logger = LogManager.getLogger(ShoppingCartMapper.class);
 
     @Override
     public ShoppingCartResponseDto mapToDto(ShoppingCart shoppingCart) {
@@ -21,7 +21,7 @@ public class ShoppingCartMapper implements
                 .stream()
                 .map(Ticket::getId)
                 .collect(Collectors.toList()));
-        logger.info("Shopping Cart from Model to Dto mapping. Params: Shopping Cart = {}",
+        log.info("Shopping Cart from Model to Dto mapping. Params: Shopping Cart = {}",
                 shoppingCart);
         return responseDto;
     }

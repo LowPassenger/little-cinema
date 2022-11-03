@@ -4,14 +4,14 @@ import cinema.model.Role;
 import cinema.model.User;
 import java.util.Set;
 import javax.annotation.PostConstruct;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
+@Log4j2
 public class DataInitializerClass {
-    private static final Logger logger = LogManager.getLogger(DataInitializerClass.class);
     private static final String ADMIN_EMAIL = "admin@gmail.com";
     private static final String ADMIN_PASSWORD = "1234";
     private static final String USER_EMAIL = "user@gmail.com";
@@ -48,7 +48,7 @@ public class DataInitializerClass {
         user.setRoles(Set.of(userRole));
         userService.add(user);
         shoppingCartService.registerNewShoppingCart(user);
-        logger.info("Users successfully added to DB. Params: User admin = {}, User user = {}",
+        log.info("Users successfully added to DB. Params: User admin = {}, User user = {}",
                 admin, user);
     }
 }

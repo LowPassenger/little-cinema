@@ -1,8 +1,7 @@
 package cinema.config;
 
 import cinema.model.Role;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -15,10 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
+@Log4j2
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String USER_ROLE = String.valueOf(Role.RoleName.USER);
     private static final String ADMIN_ROLE = String.valueOf(Role.RoleName.ADMIN);
-    private static final Logger logger = LogManager.getLogger(SecurityConfig.class);
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
@@ -30,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-        logger.debug("AuthenticationManagerBuilder configure");
+        log.debug("AuthenticationManagerBuilder configure");
     }
 
     protected void configure(HttpSecurity http) throws Exception {
@@ -60,6 +59,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .csrf().disable();
-        logger.debug("Http Security configure OK.");
+        log.debug("Http Security configure OK.");
     }
 }

@@ -9,8 +9,8 @@ import cinema.service.mapper.ResponseDtoMapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/cinema-halls")
+@Log4j2
 public class CinemaHallController {
-    private static final Logger logger = LogManager.getLogger(CinemaHallController.class);
     private final CinemaHallService cinemaHallService;
     private final RequestDtoMapper<CinemaHallRequestDto, CinemaHall> cinemaHallRequestDtoMapper;
     private final ResponseDtoMapper<CinemaHallResponseDto, CinemaHall> cinemaHallResponseDtoMapper;
@@ -39,13 +39,13 @@ public class CinemaHallController {
     public CinemaHallResponseDto add(@RequestBody @Valid CinemaHallRequestDto requestDto) {
         CinemaHall cinemaHall = cinemaHallService.add(
                 cinemaHallRequestDtoMapper.mapToModel(requestDto));
-        logger.info("Add new Cinema Hall. Params: id = {}", cinemaHall.getId());
+        log.info("Add new Cinema Hall. Params: id = {}", cinemaHall.getId());
         return cinemaHallResponseDtoMapper.mapToDto(cinemaHall);
     }
 
     @GetMapping
     public List<CinemaHallResponseDto> getAll() {
-        logger.info("Get list of Cinema Halls.");
+        log.info("Get list of Cinema Halls.");
         return cinemaHallService.getAll()
                 .stream()
                 .map(cinemaHallResponseDtoMapper::mapToDto)

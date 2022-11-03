@@ -2,9 +2,9 @@ package cinema.config;
 
 import java.util.Properties;
 import javax.sql.DataSource;
+
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,8 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @PropertySource("classpath:db.properties")
 @ComponentScan(basePackages = "cinema")
+@Log4j2
 public class AppConfig {
-    private static final Logger logger = LogManager.getLogger(AppConfig.class);
     private final Environment environment;
 
     @Autowired
@@ -38,7 +38,7 @@ public class AppConfig {
         dataSource.setUrl(dbUrl);
         dataSource.setUsername(dbUser);
         dataSource.setPassword(dbPassword);
-        logger.info("Create DataSource Bean. Params: database driver = {}, "
+        log.info("Create DataSource Bean. Params: database driver = {}, "
                 + "database URL = {}, database User = {}, database password = OK",
                 dbDriver, dbUrl, dbUser);
         return dataSource;
@@ -60,7 +60,7 @@ public class AppConfig {
 
         factoryBean.setHibernateProperties(properties);
         factoryBean.setPackagesToScan("cinema.model");
-        logger.info("SessionFactory creation. Params: show SQL queries = {}, "
+        log.info("SessionFactory creation. Params: show SQL queries = {}, "
                 + "Hibernate Dialect = {}, Hibernate hmb2ddl auto = {}",
                 hibernateShowSql, hibernateDialect, hibernateHmbDdlAuto);
         return factoryBean;
@@ -68,7 +68,7 @@ public class AppConfig {
 
     @Bean
     public PasswordEncoder getEncoder() {
-        logger.debug("Password Encoder creation.");
+        log.debug("Password Encoder creation.");
         return new BCryptPasswordEncoder();
     }
 }
