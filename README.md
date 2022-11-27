@@ -42,23 +42,23 @@ The project uses following N-tier architecture:
 
 #   <center>Installation and using</center>
 
-Must have: JDK (Intellij IDEA Ultimate, Eclipse e.t.c), Git, Apache Maven, Postman API to create HTTP requests, MySQL or any other server and (optional) MySQL Workbench. Use guides and Google search for troubleshoot apps installation issues. 
-Configure inner logger, use log4j2.xml file from
-src/main/resources/
-Standard path to log file is 
-logs/
-Maybe you need to change it to absolute path like "D:/Projects/cinema-application/logs/"
-Also You can change log messages and log levels for messages in your code.
-Create a database. I'm use a local MySQL database
-In a src/main/resources/db.properties fill in your database credentials
-The code has no Main.class. To start an application, use a WebServer like Apache Tomcat. I'm use 9.0.65 version
-Add TomcatLocal to JDK configuration. Use default port 8080. Do not forget to specify Tomcat installation folder and select taxi_service:war exploded in the fix window, also change the initial path from /web_security_war_exploded to /
+  * Must have: JDK (Intellij IDEA Ultimate, Eclipse e.t.c), Git, Apache Maven, Postman API to create HTTP requests, MySQL or any other server and (optional) MySQL Workbench. Use guides and Google search for troubleshoot apps installation issues.
+  * Configure inner logger, use log4j2.xml file from   src/main/resources/
+  * Standard path to log file is   logs/
+  * Maybe you need to change it to absolute path like   "D:/Projects/cinema-application/logs/"
+  * Also You can change log messages and log levels for messages in your code.
+  * Create a database. I'm use a local MySQL database
+  * In a src/main/resources/db.properties fill in your database credentials
+  * The code has no Main.class. To start an application, use a WebServer like Apache Tomcat. I'm use 9.0.65 version
+  * Add TomcatLocal to JDK configuration. Use default port 8080. Do not forget to specify Tomcat installation folder and select taxi_service:war exploded in the fix window, also change the initial path from   /web_security_war_exploded   to   /
+ 
+#   <center>Control endpoints list</center>
 
-Run Tomcat Local
+  * Run Tomcat Local
+  * Use HTTP protocol for requests. All URL starts with localhost:8080
+  * For request body blocks please use JSON data format
+  * Here is the list of ends for URL address, what uses for:
 
-Use HTTP protocol for requests. All URL starts with localhost:8080
-For request body blocks please use JSON data format.
-Here is the list of ends for URL address, what uses for:
 
 /login - the standard login page from Spring Security. Please, use 
 login: user@gmail.com password: 1234 for register as a User or 
