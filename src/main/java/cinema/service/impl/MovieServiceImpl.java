@@ -4,7 +4,6 @@ import cinema.dao.MovieDao;
 import cinema.model.Movie;
 import cinema.service.MovieService;
 import java.util.List;
-
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

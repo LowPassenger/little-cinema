@@ -6,7 +6,6 @@ import cinema.exception.DataProcessingException;
 import cinema.model.Order;
 import cinema.model.User;
 import java.util.List;
-
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

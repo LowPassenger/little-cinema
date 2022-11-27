@@ -10,7 +10,6 @@ import cinema.service.UserService;
 import cinema.service.mapper.ResponseDtoMapper;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -42,7 +41,7 @@ public class OrderController {
 
     @PostMapping("/complete")
     public OrderResponseDto completeOrder(Authentication auth) {
-       User user = getUserFromAuthenticationParameter(auth);
+        User user = getUserFromAuthenticationParameter(auth);
         ShoppingCart cart = shoppingCartService.getByUser(user);
         log.info("Complete order. Params: User = {}", user);
         return orderResponseDtoMapper.mapToDto(orderService.completeOrder(cart));

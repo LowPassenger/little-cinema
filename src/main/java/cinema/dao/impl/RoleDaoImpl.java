@@ -5,7 +5,6 @@ import cinema.dao.RoleDao;
 import cinema.exception.DataProcessingException;
 import cinema.model.Role;
 import java.util.Optional;
-
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

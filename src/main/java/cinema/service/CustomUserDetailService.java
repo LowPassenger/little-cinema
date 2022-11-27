@@ -1,10 +1,10 @@
 package cinema.service;
 
-import lombok.extern.log4j.Log4j2;
 import static org.springframework.security.core.userdetails.User.withUsername;
 
 import cinema.model.Role;
 import cinema.model.User;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +25,7 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         if (userService.findByEmail(username).isEmpty()) {
-            log.error("Can't find User by email. Params: email = {}", username);
+            //log.error("Can't find User by email. Params: email = {}", username);
             throw new UsernameNotFoundException("User with username " + username
                     + " not found!");
         }
@@ -38,7 +38,7 @@ public class CustomUserDetailService implements UserDetailsService {
                 .map(Role::getRoleName)
                         .map(Enum::toString)
                 .toArray(String[]::new));
-        log.info("Create User Details. Params: User = {}", user);
+        //log.info("Create User Details. Params: User = {}", user);
         return userBuilder.build();
     }
 }

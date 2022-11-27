@@ -3,7 +3,6 @@ package cinema.dao;
 import cinema.exception.DataProcessingException;
 import java.util.List;
 import java.util.Optional;
-
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

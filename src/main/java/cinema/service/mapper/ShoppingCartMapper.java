@@ -4,7 +4,6 @@ import cinema.dto.response.ShoppingCartResponseDto;
 import cinema.model.ShoppingCart;
 import cinema.model.Ticket;
 import java.util.stream.Collectors;
-
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 

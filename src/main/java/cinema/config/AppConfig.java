@@ -2,7 +2,6 @@ package cinema.config;
 
 import java.util.Properties;
 import javax.sql.DataSource;
-
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;

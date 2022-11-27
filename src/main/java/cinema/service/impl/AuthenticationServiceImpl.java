@@ -7,7 +7,6 @@ import cinema.service.RoleService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import java.util.Set;
-
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
