@@ -40,6 +40,54 @@ The project uses following N-tier architecture:
 
 ![database](images/database.jpg)
 
+ 
+#   <center>Control endpoints list</center>
+
+  * Run Tomcat Local
+  * Use HTTP protocol for requests. All URL starts with localhost:8080
+  * For request body blocks please use JSON data format
+  * Here is the list of ends for URL address, what uses for:
+
+  * /login - the standard login page from Spring Security. Please, use 
+login: user@gmail.com password: 1234 for register as a User or 
+login: admin@gmail.com password: 1234 to register as an Admin. 
+Yes, I know that using these awful credentials is not a good idea, but it's a test project. Please, never do that on your real projects!
+
+  * / - Congrats! Login complete, you can make requests to use the application.
+  * /register - POST request for registration of new user. Here you don't need it, because User and Admin are already registered in your database.
+  * /movies - POST request for add movie to database. Params: 
+Authorization: Basic Auth, credentials are equal to your login credentials
+Headers: Content-Type  application/json
+Body: {"title":"Movie_title", "description":"Movie_description"}
+  * /movies - GET request returns actual list of movies. Params: 
+Authorization: Basic Auth, credentials are equal to your login credentials
+  * /cinema-halls -  POST request for add cinema hall to database. Params: 
+Authorization: Basic Auth, credentials are equal to your login credentials
+Headers: Content-Type  application/json
+Body: {"capacity":"int value of cinema hall capacity", "description":"Cinema hall description"}
+  * /cinema-halls - GET request returns actual list of cinema halls. Params: 
+Authorization: Basic Auth, credentials are equal to your login credentials
+  * /movie-sessions - POST request for adding a new movie session to the database. Params: 
+Authorization: Basic Auth, credentials are equal to your login credentials
+Headers: Content-Type  application/json
+Body: {"movieId":"int movie id", "cinemaHallId":"int cinema hall id", "showTime":"YYYY-mm-dd HH:mm"}
+  * /movie-sessions/available?movieId={movie id}&date={dd.mm.YYYY} - GET request returns actual list of movie sessions for current date & time.
+  * /movie-sessions/{id} - PUT request for update movie session with {int movie session id} in database. Params: 
+Authorization: Basic Auth, credentials are equal to your login credentials
+Headers: Content-Type  application/json
+Body: {"movieId":"int movie id", "cinemaHallId":"int cinema hall id", "showTime":"YYYY-mm-dd HH:mm"}
+  * /movie-sessions/{id} - DELETE request for delete movie session with {int movie session id} from database.
+  * /users/by-email?email={user email} - GET request returns information about the user with {user email}.
+  * /shopping-carts/movie-sessions?userId={int user id}&movieSessionId={int movie session id} - PUT request for add new movie session to current user shopping cart. Params: 
+Authorization: Basic Auth, credentials for User role only!
+  * /shopping-carts/by-user - GET request returns information about the shopping cart of the current user. Params: 
+Authorization: Basic Auth, credentials for User role only!
+  * /orders - GET request returns order history for current user. Params: 
+Authorization: Basic Auth, credentials for User role only!
+  * /orders/complete - POST request for complete order to current user. Params: 
+Authorization: Basic Auth, credentials for User role only!
+
+
 #   <center>Installation and using</center>
 
   * Must have: JDK (Intellij IDEA Ultimate, Eclipse e.t.c), Git, Apache Maven, Postman API to create HTTP requests, MySQL or any other server and (optional) MySQL Workbench. Use guides and Google search for troubleshoot apps installation issues.
@@ -51,64 +99,3 @@ The project uses following N-tier architecture:
   * In a src/main/resources/db.properties fill in your database credentials
   * The code has no Main.class. To start an application, use a WebServer like Apache Tomcat. I'm use 9.0.65 version
   * Add TomcatLocal to JDK configuration. Use default port 8080. Do not forget to specify Tomcat installation folder and select taxi_service:war exploded in the fix window, also change the initial path from   /web_security_war_exploded   to   /
- 
-#   <center>Control endpoints list</center>
-
-  * Run Tomcat Local
-  * Use HTTP protocol for requests. All URL starts with localhost:8080
-  * For request body blocks please use JSON data format
-  * Here is the list of ends for URL address, what uses for:
-
-
-/login - the standard login page from Spring Security. Please, use 
-login: user@gmail.com password: 1234 for register as a User or 
-login: admin@gmail.com password: 1234 to register as an Admin. 
-Yes, I know that using these awful credentials is not a good idea, but it's a test project. Please, never do that on your real projects!
-
-/ - Congrats! Login complete, you can make requests to use the application.
-
-/register - POST request for registration of new user. Here you don't need it, because User and Admin are already registered in your database.
-
-/movies - POST request for add movie to database. Params: 
-Authorization: Basic Auth, credentials are equal to your login credentials
-Headers: Content-Type  application/json
-Body: {"title":"Movie_title", "description":"Movie_description"}
-
-/movies - GET request returns actual list of movies. Params: 
-Authorization: Basic Auth, credentials are equal to your login credentials
-
-/cinema-halls -  POST request for add cinema hall to database. Params: 
-Authorization: Basic Auth, credentials are equal to your login credentials
-Headers: Content-Type  application/json
-Body: {"capacity":"int value of cinema hall capacity", "description":"Cinema hall description"}
-
-/cinema-halls - GET request returns actual list of cinema halls. Params: 
-Authorization: Basic Auth, credentials are equal to your login credentials
-
-/movie-sessions - POST request for adding a new movie session to the database. Params: 
-Authorization: Basic Auth, credentials are equal to your login credentials
-Headers: Content-Type  application/json
-Body: {"movieId":"int movie id", "cinemaHallId":"int cinema hall id", "showTime":"YYYY-mm-dd HH:mm"}
-
-/movie-sessions/available?movieId={movie id}&date={dd.mm.YYYY} - GET request returns actual list of movie sessions for current date & time.
-
-/movie-sessions/{id} - PUT request for update movie session with {int movie session id} in database. Params: 
-Authorization: Basic Auth, credentials are equal to your login credentials
-Headers: Content-Type  application/json
-Body: {"movieId":"int movie id", "cinemaHallId":"int cinema hall id", "showTime":"YYYY-mm-dd HH:mm"}
-
-/movie-sessions/{id} - DELETE request for delete movie session with {int movie session id} from database.
-
-/users/by-email?email={user email} - GET request returns information about the user with {user email}.
-
-/shopping-carts/movie-sessions?userId={int user id}&movieSessionId={int movie session id} - PUT request for add new movie session to current user shopping cart. Params: 
-Authorization: Basic Auth, credentials for User role only!
-
-/shopping-carts/by-user - GET request returns information about the shopping cart of the current user. Params: 
-Authorization: Basic Auth, credentials for User role only!
-
-/orders - GET request returns order history for current user. Params: 
-Authorization: Basic Auth, credentials for User role only!
-
-/orders/complete - POST request for complete order to current user. Params: 
-Authorization: Basic Auth, credentials for User role only!
